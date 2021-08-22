@@ -86,6 +86,10 @@
                                                        href="{{route('admin.sale')}}">Sale</a>
                                                 </li>
                                                 <li class="menu-item">
+                                                    <a title="Manage Home Categories"
+                                                       href="{{route('admin.coupons')}}">Coupon</a>
+                                                </li>
+                                                <li class="menu-item">
                                                     <a href="{{route('logout')}}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                                                 </li>
                                                 <form id="logout-form" action="{{route('logout')}}" method="post">
