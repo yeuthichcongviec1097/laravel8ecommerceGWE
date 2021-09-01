@@ -91,7 +91,7 @@
                                     Shipping</b>
                             </p>
                             <p class="summary-info total-info "><span class="title">Total</span><b
-                                    class="index">${{Cart::instance('cart')->total()}}2%</b></p>
+                                    class="index">${{Cart::instance('cart')->total()}}</b></p>
                         @endif
                     <!--test state fake-->
                         {{--                    @if(!is_null($fake))--}}
