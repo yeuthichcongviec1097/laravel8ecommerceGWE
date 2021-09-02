@@ -27,6 +27,9 @@ class AdminEditProductComponent extends Component
     public $newimage;
     public $product_id;
 
+    public $images;
+    public $newimages;
+
     public function mount($product_slug){
         $product = Product::where('slug', $product_slug)->first();
         $this->name = $product->name;
@@ -40,8 +43,8 @@ class AdminEditProductComponent extends Component
         $this->featured = $product->featured;
         $this->quantity = $product->quantity;
         $this->image = $product->image;
+        $this->images = explode(",", $product->images);
         $this->category_id = $product->category_id;
-        $this->newimage = $product->newimage;
         $this->product_id = $product->id;
     }
 
@@ -62,6 +65,11 @@ class AdminEditProductComponent extends Component
             'quantity' => 'required|numeric',
             'category_id' => 'required',
         ]);
+        if($this->newimage){
+            $this->validateOnly($fields, [
+               'newimage' => 'required|mimes:jpeg,png,jpg',
+            ]);
+        }
     }
 
     public function updateProduct(){
@@ -77,6 +85,13 @@ class AdminEditProductComponent extends Component
             'quantity' => 'required|numeric',
             'category_id' => 'required',
         ]);
+
+        if($this->newimage){
+            $this->validate([
+                'newimage' => 'required|mimes:jpeg,png,jpg',
+            ]);
+        }
+
         $product = Product::find($this->product_id);
         $product->name = $this->name;
         $product->slug = $this->slug;
@@ -93,6 +108,15 @@ class AdminEditProductComponent extends Component
             $this->newimage->storeAs('products', $imageName);
             $product->image = $imageName;
         }
+
+        $imagesName = '';
+        foreach ($this->newimages as $key=>$image){
+            $imgName = Carbon::now()->timestamp . $key . '.' . $image->extension();
+            $image->storeAs('products', $imgName);
+            $imagesName = $imagesName . ',' . $imgName;
+        }
+        $product->images = $imagesName;
+
         $product->category_id = $this->category_id;
         $product->save();
 

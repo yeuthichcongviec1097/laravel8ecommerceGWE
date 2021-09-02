@@ -57,7 +57,7 @@
                 <style>
                     .product-wish {
                         position: absolute;
-                        bottom: 16%;
+                        bottom: 13%;
                         left: 0;
                         z-index: 99;
                         right: 30px;
@@ -101,7 +101,13 @@
                                     </a>
                                 </div>
                                 <div class="product-info">
-                                    <a href="{{route('product.details', [$product->slug])}}" class="product-name"><span>{{$product->name}}</span></a>
+                                    <a href="{{route('product.details', [$product->slug])}}" class="product-name"><span style="display:inline-block;
+                                                                                                                                white-space: nowrap;
+                                                                                                                                overflow: hidden;
+                                                                                                                                text-overflow: ellipsis;
+                                                                                                                                max-width: 34ch;" title="{{$product->name}}">
+                                                                                                                                {{$product->name}}
+                                                                                                                    </span></a>
                                     <div class="wrap-price"><span class="product-price">{{$product->regular_price}}</span></div>
                                     <a href="#" class="btn add-to-cart" wire:click.prevent="store({{$product->id}}, '{{$product->name}}', {{$product->regular_price}})">Add To Cart</a>
                                     <div class="product-wish">

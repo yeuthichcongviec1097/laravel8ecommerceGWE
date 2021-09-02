@@ -129,14 +129,21 @@
                             <div class="form-group">
                                 <label class="col-md-4 control-label">Product Gallery</label>
                                 <div class="col-md-4">
-                                    <input type="file" class="input-file" name="" id="" placeholder="Product Image"
-                                           wire:model="images" multiple>
-                                    @if($images)
+                                    <input type="file" class="input-file" name="" id="" accept=".gif, .jpeg, .jpg, .png"
+                                           wire:model="newimages" multiple>
+                                    @if($newimages)
+                                        @foreach($newimages as $newimage)
+                                            @if($newimages)
+                                                <img src="{{$newimage->temporaryUrl()}}" alt="" width="120">
+                                            @endif
+                                        @endforeach
+                                    @else
                                         @foreach($images as $image)
-                                            <img src="{{$image->temporaryUrl()}}" alt="{{$name}}" width="120" accept=".gif, .jpeg, .jpg, .png">
+                                            @if($image)
+                                                <img src="{{asset('assets/images/products')}}/{{$image}}" alt="{{$name}}" width="120">
+                                            @endif
                                         @endforeach
                                     @endif
-                                    @error('images') <p class="text-danger">{{$message}}</p> @enderror
                                 </div>
                             </div>
 

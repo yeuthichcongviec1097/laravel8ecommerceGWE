@@ -2992,6 +2992,13 @@ vertical-align: top;
 .product-list-style .advance-info .wrap-btn .btn-wishlist::before{
     content: "\f004";
 }
+.product-list-style .advance-info .wrap-btn .btn.btn-remove-wishlist{
+    text-align: right;
+    float: right;
+}
+.product-list-style .advance-info .wrap-btn .btn-remove-wishlist::before{
+    content: "\f004";
+}
 .wrap-login-item{
     display: inline-block;
     width: 100%;
@@ -4469,6 +4476,13 @@ article.single-post blockquote p:last-child::after{
 }
 .wrap-product-detail .detail-info .wrap-btn .btn.btn-wishlist::before{
     content: "\f004";
+}
+.wrap-product-detail .detail-info .wrap-btn .btn.btn-remove-wishlist{
+    float: right;
+}
+.wrap-product-detail .detail-info .wrap-btn .btn.btn-remove-wishlist::before{
+    content: "\f004";
+    color: orange;
 }
 .wrap-product-detail .detail-info .wrap-price span.product-price{
     font-weight: 600;

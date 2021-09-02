@@ -23,7 +23,7 @@
             <div class="col-lg-9 col-md-8 col-sm-8 col-xs-12 main-content-area">
                 <div class="wrap-product-detail">
                     <div class="detail-media">
-                        <div class="product-gallery">
+                        <div class="product-gallery" wire:ignore>
                             <ul class="slides">
                                 <li class="right-main-img" data-thumb="{{asset('assets/images/products/')}}/{{$product->image}}">
                                     <img class="right-main-img" src="{{asset('assets/images/products/')}}/{{$product->image}}"
@@ -51,15 +51,20 @@
                                     color: #e6e6e6 !important;
                                 }
                             </style>
-
                             @php
                                 $avgrating = 0;
+                                $sumRating = 0;
+                                $avgratingForeach = 0;
+                                $r = 0;
+                                foreach($orderItemByProduct as $orderItem){
+                                    $sumRating += $orderItem->review->rating;
+                                    $r++;
+                                }
+                                foreach($orderItemByProduct as $orderItem){
+                                    $avgratingForeach = intval(round($avgrating + ($sumRating/$r)));
+                                }
+                                $avgrating = $avgratingForeach;
                             @endphp
-                            @foreach($product->orderItems->where('rstatus',1) as $orderItem)
-                                @php
-                                    $avgrating = $avgrating + $orderItem->review->rating;
-                                @endphp
-                            @endforeach
                             @for($i=1; $i<=5; $i++)
                                 @if($i<=$avgrating)
                                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -120,9 +125,16 @@
                                    wire:click.prevent="store({{$product->id}}, '{{$product->name}}', {{$product->regular_price}})">Add
                                     to Cart</a>
                             @endif
+                            @php
+                                $witems = Cart::instance('wishlist')->content()->pluck('id');
+                            @endphp
                             <div class="wrap-btn">
                                 <a href="#" class="btn btn-compare">Add Compare</a>
-                                <a href="#" class="btn btn-wishlist">Add Wishlist</a>
+                                @if($witems->contains($product->id))
+                                    <a href="#" wire:click.prevent="removeFromWishlist({{$product->id}})" class="btn btn-remove-wishlist" style="color: orange;">Remove Wishlist</a>
+                                @else
+                                    <a href="#" wire:click.prevent="addToWishlist({{$product->id}}, '{{$product->name}}', {{$product->regular_price}})" class="btn btn-wishlist">Add Wishlist</a>
+                                @endif
                             </div>
                         </div>
                     </div>
